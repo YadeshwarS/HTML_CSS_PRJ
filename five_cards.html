@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Five Cards</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS styles can be added here */
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Header Row -->
+    <div class="row mb-3">
+      <div class="col">
+        <h1>FIVE CARDS</h1>
+        <!-- Replace 'logo.png' with the path to your logo -->
+      </div>
+    </div>
+    <!-- Start Game Button Row -->
+    <div class="row">
+      <div class="col">
+        <button id="startGameBtn" class="btn btn-primary">PLAY</button>
+      </div>
+    </div>
+    <!-- Game Input Section - Hidden by default -->
+    <div id="gameInputs" class="mt-3" style="display: none;">
+      <h2>Enter Game Details</h2>
+      <div class="row">
+        <div class="col">
+          <label for="totalPlayers">Total Number of Players:</label>
+          <input type="number" id="totalPlayers" class="form-control">
+        </div>
+        <div class="col">
+          <label for="maxPoints">Max Points:</label>
+          <input type="number" id="maxPoints" class="form-control">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button id="submitGameDetails" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </div>
+    <!-- Game Table Section - Hidden by default -->
+    <div id="gameTable" class="mt-5" style="display: none;">
+      <h2>Game Table</h2>
+      <table id="gameDataTable" class="table">
+        <thead>
+          <tr>
+            <th>Player Name</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table body will be populated dynamically -->
+        </tbody>
+      </table>
+      <!-- Button to enter points -->
+      <div class="row mt-3">
+        <div class="col">
+          <button id="enterPointsBtn" class="btn btn-primary">Enter Points for Round</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var maxPoints = 0;
+      var playerData = [];
+
+      // Function to show game inputs when 'PLAY' button is clicked
+      $('#startGameBtn').click(function() {
+        $('#gameInputs').show();
+      });
+
+      // Function to submit game details
+      $('#submitGameDetails').click(function() {
+        var totalPlayers = $('#totalPlayers').val();
+        maxPoints = $('#maxPoints').val();
+        createGameTable(totalPlayers);
+        $('#gameInputs').hide();
+        $('#gameTable').show();
+      });
+
+      // Function to create game table dynamically
+      function createGameTable(totalPlayers) {
+        var tableBody = $('#gameDataTable tbody');
+        tableBody.empty();
+        for (var i = 1; i <= totalPlayers; i++) {
+          var playerName = prompt("Enter Player " + i + "'s Name:");
+          playerData.push({
+            name: playerName,
+            points: 0,
+            disqualified: false
+          });
+          tableBody.append('<tr id="player_' + i + '"><td>' + playerName + '</td><td>0</td></tr>');
+        }
+      }
+
+      // Function to handle entering points for each player
+      function enterPoints() {
+        for (var i = 0; i < playerData.length; i++) {
+          if (!playerData[i].disqualified) {
+            var points = parseInt(prompt("Enter points for " + playerData[i].name + ":"));
+            playerData[i].points += points;
+            $('#player_' + (i + 1) + ' td:last-child').text(playerData[i].points);
+
+            if (playerData[i].points >= maxPoints) {
+              alert(playerData[i].name + " has been disqualified!");
+              playerData[i].disqualified = true;
+            }
+          }
+        }
+      }
+
+      // Listen for clicks on the 'Enter Points' button
+      $('#enterPointsBtn').click(function() {
+        enterPoints();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+.container-fluid {
+  text-align: center;
+  margin-top: 100px;
+}
+#log {
+  align-items: center;
+  justify-content: center;
+}
+#name {
+  background-color: rgb(7, 7, 98);
+  color: white;
+  padding: 15px 0;
+  border-radius: 15px;
+  padding-right: 80px;
+}
+#pass {
+  background-color: rgb(7, 7, 98);
+  color: white;
+  padding: 15px 0;
+  border-radius: 15px;
+  padding-right: 80px;
+}
+#lg {
+  color: white;
+  border-radius: 10px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+#para {
+  text-align: center;
+}
+
+table th {
+  padding: 15px 15px;
+  padding-left: 150px;
+}
